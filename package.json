@@ -1,0 +1,36 @@
+{
+  "name": "vehicleRentWebsite",
+  "version": "0.0.1",
+  "description": "Application based on Node.js And AngularJS",
+  "main": "server.js",
+  "author": "Patryk&Pawel",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "crypto": "0.0.3",
+    "express": "^4.15.3",
+    "hooks-fixed": "^2.0.0",
+    "method-override": "^2.3.9",
+    "mongoose": "^4.11.3",
+    "morgan": "^1.8.2",
+    "mpromise": "^0.5.5",
+    "mquery": "^2.3.1",
+    "mysql": "^2.14.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.2"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.11",
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-notify": "^3.0.0",
+    "gulp-server-livereload": "^1.9.2"
+  }
+}

@@ -10,7 +10,7 @@ class LoginForm extends React.Component{
         <input type="text" name="name" className="loginForm__name" placeholder="Username" required/>
         <input type="password" name="password" className="loginForm__password" placeholder="Password" required/>
         <div>
-          <input type="checkbox" className="loginForm__remember" name="remember" id="remember" required/>
+          <input type="checkbox" className="loginForm__remember" name="remember" id="remember"/>
           <label htmlFor="remember">Remember me</label>
         </div>
         <button type="submit" className="loginForm__submit">LogIn</button>

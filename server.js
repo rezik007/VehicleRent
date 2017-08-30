@@ -39,6 +39,11 @@ app.post('/api/createAccount', function(req, res) {
         res.send('udalo sie');
     })
 });
+
+app.post('/api/login', function(req, res) {
+    if (err) {throw err}
+    res.send('Login success');
+  });
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 console.log('App listening on port 8080');

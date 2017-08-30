@@ -8,6 +8,10 @@ body {
   font-family: sans-serif;
 }
 
+p{
+  margin: 0;
+}
+
 .notFound{
   width: 100px;
   margin: 100px auto;
@@ -92,6 +96,37 @@ body {
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+.loginRegister .modal {
+  position: absolute;
+  top: 25px;
+  left: 50% 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 75px;
+}
+
+.modal--success {
+  background: green;
+}
+
+.modal--error {
+  background: red;
+}
+
+.modal__info {
+  color: white;
+}
+
+.modal__close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: white;
+  cursor: pointer;
 }
 
 .navigation__login, .navigation__register{

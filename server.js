@@ -5,6 +5,8 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var crypto = require('crypto');
+var validator = require('validator');
+var uid = require('rand-token').uid;
 
 // configuration =================
 
@@ -23,16 +25,45 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 
 // routes ======================================================================
 
 
-app.post('/api/createAccount', function(req, res) {
+app.post('/api/register', function(req, res) {
+    if(validator.isAlphanumeric(req.body.username) && validator.isEmail(req.body.email)) {
+        let password = crypto.createHash('md5').update(req.body.password).digest('hex')
+        connection.query('INSERT INTO `users` (name, email, password) VALUES (?, ?, ?);',
+        [req.body.username, req.body.email, password], function(err, rows, fields) {
+            if (err) {throw err}
+            res.status(201);
+            res.json({success_msg: 'Konto zostało utworzone.'})
+        })
+    } else {
+        res.status(400);
+        res.json({error: 'Niepoprawna nazwa użytkownik lub hasło.'})
+    }
+}); 
+app.post('/api/login', function(req, res) {
     let password = crypto.createHash('md5').update(req.body.password).digest('hex')
-    connection.query('INSERT INTO `users` (name, email, password) VALUES ("' + req.body.username + '","' + req.body.email + '","' + password + '");', function(err, rows, fields) {
-        if (err) {throw err}
-        res.send('udalo sie');
-    })
+    connection.query('SELECT password FROM `users` WHERE email=?', [req.body.email],
+     function(err, rows, fields) {
+         console.log(rows[0].password)
+         if(rows[0].password === password) {
+             res.status(200);
+             res.json({success_msg: 'Zalogowano poprawnie.',
+                       username: req.body.username,
+                       token: uid(16)})
+         } else {
+             res.status(400)
+             res.json({error: 'Nieprawidłowe hasło lub email.'})
+         }
+     })
 }); 
 // listen (start app with node server.js) ======================================
 app.listen(8080);

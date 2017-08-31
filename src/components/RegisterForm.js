@@ -1,4 +1,5 @@
 import React from 'react';
+import apiURL from '../config';
 
 //Simple component that renders form element
 //It uses action attribute to POST createAccount
@@ -13,7 +14,8 @@ class RegisterForm extends React.Component{
 
     this.state = {
       password: '',
-      repeatPassword: ''
+      repeatPassword: '',
+      areTheSame: true
     }
   }
 
@@ -21,10 +23,24 @@ class RegisterForm extends React.Component{
     return this.state.password === this.state.repeatPassword;
   }
 
+  passwordCompare() {
+    if(!this.checkPassword()) {
+      this.setState({
+        areTheSame: false
+      })
+    } else {
+      this.setState({
+        areTheSame: true
+      })
+    }
+  }
+
   handlePasswordChange(e) {
     const value = e.target.value;
     this.setState({
       password: value
+    }, function() {
+      this.passwordCompare();
     });
   }
 
@@ -32,17 +48,19 @@ class RegisterForm extends React.Component{
     const value = e.target.value;
     this.setState({
       repeatPassword: value
+    }, function() {
+      this.passwordCompare();
     });
   }
 
   handleSubmit(e) {
-    const messages = ['Invalid Username or Password.', 'Your Registration was successfull! :)', 'Something went wrong! :(']
+    const messages = ['Invalid Password.', 'Your Registration was successfull! :)', 'Something went wrong! :(']
     e.preventDefault();
     if (!this.checkPassword()) {
       this.props.onRegisterSubmit(messages[0]);
       return;
     }
-    fetch('http://localhost:8080/api/createAccount', {
+    fetch(apiURL + 'api/createAccount', {
      method: 'post',
      headers: {'Content-Type':'application/json'},
      body: JSON.stringify({
@@ -60,12 +78,19 @@ class RegisterForm extends React.Component{
   }
 
   render() {
+    let passwordLabel = null;
+
+    if (!this.state.areTheSame) {
+      passwordLabel = <label htmlFor="password" className="registerForm__passwordCompare">Passwords do not match!</label>;
+    }
+
     return(
       <form onSubmit={this.handleSubmit} className="registerForm">
         <input ref={(ref) => {this.username = ref}} type="text" name="username" className="registerForm__name" placeholder="Username" required/>
         <input ref={(ref) => {this.email = ref}} type="email" name="email" className="registerForm__email" placeholder="Email" required/>
-        <input onChange={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="registerForm__password" placeholder="Password" required/>
-        <input onChange={this.handleRepeatPasswordChange} type="password" name="confirm-password" className="registerForm__password" placeholder="Confirm Password" required/>
+        {passwordLabel}
+        <input id="password" onKeyUp={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="registerForm__password" placeholder="Password" required/>
+        <input onKeyUp={this.handleRepeatPasswordChange} type="password" name="confirm-password" className="registerForm__password" placeholder="Confirm Password" required/>
         <input type="submit" className="registerForm__submit" value="Register" />
       </form>
     )

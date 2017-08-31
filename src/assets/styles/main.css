@@ -149,6 +149,10 @@ p{
   height: 100%;
 }
 
+.registerForm__passwordCompare {
+  color: red;
+}
+
 .loginForm__name, .loginForm__password, .registerForm__name, .registerForm__password, .registerForm__email{
   width: 50%;
   height: 40px;

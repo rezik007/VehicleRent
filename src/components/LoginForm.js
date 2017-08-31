@@ -1,5 +1,5 @@
 import React from 'react';
-
+import apiURL from '../config';
 //Simple component that renders form element
 //It uses action attribute to POST login
 
@@ -11,7 +11,7 @@ class LoginForm extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault();
-    fetch('http://localhost:8080/api/login', {
+    fetch(apiURL + 'api/login', {
      method: 'post',
      headers: {'Content-Type':'application/json'},
      body: JSON.stringify({
@@ -28,7 +28,7 @@ class LoginForm extends React.Component{
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit} action="http://localhost:8080/api/login"  method="post" className="loginForm">
+      <form onSubmit={this.handleSubmit} method="post" className="loginForm">
         <input ref={(ref) => {this.username = ref}} type="text" name="name" className="loginForm__name" placeholder="Username" required/>
         <input ref={(ref) => {this.password = ref}} type="password" name="password" className="loginForm__password" placeholder="Password" required/>
         <div>

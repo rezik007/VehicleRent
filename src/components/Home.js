@@ -5,8 +5,8 @@ import React from 'react';
 class Home extends React.Component {
   render() {
     return (
-      <div className="container three">
-        <h1 className="title">Welcome to VehicleRent</h1>
+      <div className="section three">
+        <h1 className="section__title">Welcome to VehicleRent</h1>
       </div>
     );
   }

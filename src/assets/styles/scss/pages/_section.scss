@@ -5,8 +5,18 @@
   width: 100%;
   height: calc(100vh - 100px);
 
+  @include respond-at(640px){
+    height: 100vh;
+    overflow: hidden;
+  }
+
   &__title {
     font-size: 100px;
+    text-align: center;
+
+    @include respond-at(640px){
+      font-size: 40px;
+    }
   }
 }
 

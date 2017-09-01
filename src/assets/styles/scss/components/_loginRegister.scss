@@ -12,6 +12,14 @@
   height: 400px;
   background: white;
 
+  @include respond-at(1000px){
+    width: 90%;
+  }
+
+  @include respond-at(640px){
+    margin-top: 50px;
+  }
+
   .navigation {
     display: flex;
     justify-content: space-between;

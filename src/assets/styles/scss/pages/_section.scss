@@ -1,0 +1,23 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 100px);
+
+  &__title {
+    font-size: 100px;
+  }
+}
+
+.one {
+  background: #FFF6A5;
+}
+
+.two {
+  background: #B4E1FF;
+}
+
+.three {
+  background: #92EA75;
+}

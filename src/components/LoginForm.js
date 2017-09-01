@@ -28,15 +28,15 @@ class LoginForm extends React.Component{
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit} method="post" className="loginForm">
-        <input ref={(ref) => {this.username = ref}} type="text" name="name" className="loginForm__name" placeholder="Username" required/>
-        <input ref={(ref) => {this.password = ref}} type="password" name="password" className="loginForm__password" placeholder="Password" required/>
+      <form onSubmit={this.handleSubmit} method="post" className="form">
+        <input ref={(ref) => {this.username = ref}} type="text" name="name" className="form__input" placeholder="Username" required/>
+        <input ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
         <div>
-          <input type="checkbox" className="loginForm__remember" name="remember" id="remember"/>
+          <input type="checkbox" className="form__remember" name="remember" id="remember"/>
           <label htmlFor="remember">Remember me</label>
         </div>
-        <button type="submit" className="loginForm__submit">LogIn</button>
-        <a href="" className="loginForm__forgetPassword">Forget Password?</a>
+        <button type="submit" className="form__submit">LogIn</button>
+        <a href="" className="form__forgetPassword">Forget Password?</a>
       </form>
     )
   }

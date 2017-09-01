@@ -81,17 +81,17 @@ class RegisterForm extends React.Component{
     let passwordLabel = null;
 
     if (!this.state.areTheSame) {
-      passwordLabel = <label htmlFor="password" className="registerForm__passwordCompare">Passwords do not match!</label>;
+      passwordLabel = <label htmlFor="password" className="form__passwordCompare">Passwords do not match!</label>;
     }
 
     return(
-      <form onSubmit={this.handleSubmit} className="registerForm">
-        <input ref={(ref) => {this.username = ref}} type="text" name="username" className="registerForm__name" placeholder="Username" required/>
-        <input ref={(ref) => {this.email = ref}} type="email" name="email" className="registerForm__email" placeholder="Email" required/>
+      <form onSubmit={this.handleSubmit} className="form">
+        <input ref={(ref) => {this.username = ref}} type="text" name="username" className="form__input" placeholder="Username" required/>
+        <input ref={(ref) => {this.email = ref}} type="email" name="email" className="form__input" placeholder="Email" required/>
         {passwordLabel}
-        <input id="password" onKeyUp={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="registerForm__password" placeholder="Password" required/>
-        <input onKeyUp={this.handleRepeatPasswordChange} type="password" name="confirm-password" className="registerForm__password" placeholder="Confirm Password" required/>
-        <input type="submit" className="registerForm__submit" value="Register" />
+        <input id="password" onKeyUp={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
+        <input onKeyUp={this.handleRepeatPasswordChange} type="password" name="confirm-password" className="form__input" placeholder="Confirm Password" required/>
+        <button type="submit" className="form__submit">Register</button>
       </form>
     )
   }

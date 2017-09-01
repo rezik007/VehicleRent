@@ -1,0 +1,126 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 100px); }
+  .section__title {
+    font-size: 100px; }
+
+.one {
+  background: #FFF6A5; }
+
+.two {
+  background: #B4E1FF; }
+
+.three {
+  background: #92EA75; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: auto;
+  font-family: 'Montserrat', sans-serif; }
+
+body {
+  font-size: 16px; }
+
+button {
+  border: none; }
+
+a {
+  text-decoration: none; }
+
+.nav {
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid black; }
+  .nav__links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 500px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    list-style-type: none; }
+  .nav__link {
+    padding: 10px 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease; }
+    .nav__link:hover {
+      background: black;
+      color: white; }
+
+.loginRegister {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-height: 100%;
+  height: 400px;
+  background: white; }
+  .loginRegister .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+    height: 50px;
+    border-bottom: 1px solid black; }
+    .loginRegister .navigation__login, .loginRegister .navigation__register {
+      width: 49%;
+      height: 100%;
+      cursor: pointer; }
+    .loginRegister .navigation__login[value='true'], .loginRegister .navigation__register[value='false'] {
+      background: green; }
+  .loginRegister .body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%; }
+
+.modal {
+  position: absolute;
+  top: 25px;
+  left: 50% 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 75px; }
+  .modal--success {
+    background: green; }
+  .modal--error {
+    background: red; }
+  .modal__info {
+    color: white; }
+  .modal__close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    cursor: pointer; }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%; }
+  .form__input {
+    width: 50%;
+    height: 40px;
+    margin-bottom: 10px; }
+  .form__submit {
+    margin: 10px 0;
+    padding: 10px 16px;
+    cursor: pointer; }
+  .form__passwordCompare {
+    color: red; }

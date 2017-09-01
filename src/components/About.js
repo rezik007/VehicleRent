@@ -5,8 +5,8 @@ import React from 'react';
 class About extends React.Component {
   render() {
     return (
-      <div className="container one">
-        <h1 className="title">About Us!</h1>
+      <div className="section one">
+        <h1 className="section__title">About Us!</h1>
       </div>
     );
   }

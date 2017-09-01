@@ -6,7 +6,7 @@ import LoginRegister from './LoginRegister';
 class Login extends React.Component {
   render() {
     return (
-      <div className="two container">
+      <div className="section two">
         <LoginRegister/>
       </div>
     );

@@ -60,7 +60,7 @@ class RegisterForm extends React.Component{
       this.props.onRegisterSubmit(messages[0]);
       return;
     }
-    fetch(apiURL + 'api/createAccount', {
+    fetch(apiURL + 'user/register', {
      method: 'post',
      headers: {'Content-Type':'application/json'},
      body: JSON.stringify({
@@ -69,11 +69,11 @@ class RegisterForm extends React.Component{
        "password": this.password.value,
      })
    }).then((res) => {
-     console.log('success', res.status);
-     this.props.onRegisterSubmit(messages[1]);
+     console.log(res.succes_msg)
+     this.props.onRegisterSubmit(res.succes_msg);
    }).catch((err) => {
-     console.error(err);
-     this.props.onRegisterSubmit(messages[2]);
+      console.log(err.error_msg)
+     this.props.onRegisterSubmit(err.error_msg);
    })
   }
 

@@ -36,38 +36,51 @@ app.use(function(req, res, next) {
     next();
 });
 
-
 // routes ======================================================================
 
-
-app.post('/api/register', function(req, res) {
+app.post('/api/user/register', function(req, res) {
     if(validator.isAlphanumeric(req.body.username) && validator.isEmail(req.body.email)) {
-        let password = crypto.createHash('md5').update(req.body.password).digest('hex')
-        connection.query('INSERT INTO `users` (name, email, password) VALUES (?, ?, ?);',
-        [req.body.username, req.body.email, password], function(err, rows, fields) {
-            if (err) {throw err}
-            res.status(201);
-            res.json({success_msg: 'Konto zostało utworzone.'})
+        connection.query('SELECT password FROM `users` WHERE email=? OR name=?', [req.body.email, req.body.username], function(err, rows, fields) {
+            if (err) {throw err} 
+            if (rows[0] === undefined) {
+                let password = crypto.createHash('md5').update(req.body.password).digest('hex')
+                connection.query('INSERT INTO `users` (name, email, password) VALUES (?, ?, ?);',
+                [req.body.username, req.body.email, password], function(err, rows, fields) {
+                    if (err) {throw err}
+                    res.status(201);
+                    res.json({success_msg: 'Konto zostało utworzone.'})
+                })
+            } else {
+                res.status(400); 
+                res.json({error_msg: 'Email lub nazwa użytkownika są już zajęte.'})
+            }
         })
     } else {
         res.status(400);
-        res.json({error: 'Niepoprawna nazwa użytkownik lub hasło.'})
+        res.json({error_msg: 'Niepoprawna nazwa użytkownik lub hasło.'})
     }
-}); 
-app.post('/api/login', function(req, res) {
+});
+
+app.post('/api/user/login', function(req, res) {
     let password = crypto.createHash('md5').update(req.body.password).digest('hex')
     connection.query('SELECT password FROM `users` WHERE email=?', [req.body.email],
      function(err, rows, fields) {
-         console.log(rows[0].password)
-         if(rows[0].password === password) {
-             res.status(200);
-             res.json({success_msg: 'Zalogowano poprawnie.',
-                       username: req.body.username,
-                       token: uid(16)})
-         } else {
-             res.status(400)
-             res.json({error: 'Nieprawidłowe hasło lub email.'})
+        if (err) {throw err} 
+         if (rows[0] !== undefined) {
+            if(rows[0].password === password) {
+                res.status(200);
+                res.json({success_msg: 'Zalogowano poprawnie.',
+                        username: req.body.username,
+                        token: uid(16)})
+            } else {
+                res.status(400);
+                res.json({error_msg: 'Nieprawidłowe hasło.'})
+            }
          }
+        else {
+                res.status(400);
+                res.json({error_msg: 'Konto o podanym adresie email nie istnieje.'});
+            }
      })
 }); 
 // listen (start app with node server.js) ======================================

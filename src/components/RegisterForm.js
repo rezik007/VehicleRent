@@ -54,10 +54,10 @@ class RegisterForm extends React.Component{
   }
 
   handleSubmit(e) {
-    const messages = ['Invalid Password.', 'Your Registration was successfull! :)', 'Something went wrong! :(']
+    // const messages = ['Invalid Password.', 'Your Registration was successfull! :)', 'Something went wrong! :(']
     e.preventDefault();
     if (!this.checkPassword()) {
-      this.props.onRegisterSubmit(messages[0]);
+      this.props.onRegisterSubmit('Invalid Password.');
       return;
     }
     fetch(apiURL + 'user/register', {
@@ -68,12 +68,16 @@ class RegisterForm extends React.Component{
        "email": this.email.value,
        "password": this.password.value,
      })
-   }).then((res) => {
-     console.log(res.succes_msg)
-     this.props.onRegisterSubmit(res.succes_msg);
-   }).catch((err) => {
-      console.log(err.error_msg)
-     this.props.onRegisterSubmit(err.error_msg);
+   }).then(res =>
+     res.json().then(data => ({
+       data: data,
+       status: res.status
+     }))
+  ).then(res => {
+    this.props.onRegisterSubmit(res.data.success_msg);
+  }).catch((err) => {
+      console.log(err.json);
+    //  this.props.onRegisterSubmit(err.error_msg);
    })
   }
 

@@ -18,6 +18,8 @@ var connection = mysql.createConnection({
   database : 'rezik007_vehiclerent'
 });
 
+connection.connect()
+
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({extended: true}));            // parse application/x-www-form-urlencoded
@@ -41,23 +43,23 @@ app.use(function(req, res, next) {
 app.post('/api/user/register', function(req, res) {
     if(validator.isAlphanumeric(req.body.username) && validator.isEmail(req.body.email)) {
         connection.query('SELECT password FROM `users` WHERE email=? OR name=?', [req.body.email, req.body.username], function(err, rows, fields) {
-            if (err) {throw err} 
+            if (err) {throw err}
             if (rows[0] === undefined) {
                 let password = crypto.createHash('md5').update(req.body.password).digest('hex')
                 connection.query('INSERT INTO `users` (name, email, password) VALUES (?, ?, ?);',
                 [req.body.username, req.body.email, password], function(err, rows, fields) {
                     if (err) {throw err}
                     res.status(201);
-                    res.json({success_msg: 'Konto zostało utworzone.'})
+                    res.json({success_msg: 'Your Registration was successfull! :): Konto zostało utworzone.'})
                 })
             } else {
-                res.status(400); 
-                res.json({error_msg: 'Email lub nazwa użytkownika są już zajęte.'})
+                res.status(400);
+                res.json({error_msg: 'Something went wrong! :( - Email lub nazwa użytkownika są już zajęte.'})
             }
         })
     } else {
         res.status(400);
-        res.json({error_msg: 'Niepoprawna nazwa użytkownik lub hasło.'})
+        res.json({error_msg: 'Something went wrong! :( - Niepoprawna nazwa użytkownik lub hasło.'})
     }
 });
 
@@ -65,7 +67,7 @@ app.post('/api/user/login', function(req, res) {
     let password = crypto.createHash('md5').update(req.body.password).digest('hex')
     connection.query('SELECT password FROM `users` WHERE email=?', [req.body.email],
      function(err, rows, fields) {
-        if (err) {throw err} 
+        if (err) {throw err}
          if (rows[0] !== undefined) {
             if(rows[0].password === password) {
                 res.status(200);
@@ -82,7 +84,7 @@ app.post('/api/user/login', function(req, res) {
                 res.json({error_msg: 'Konto o podanym adresie email nie istnieje.'});
             }
      })
-}); 
+});
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 console.log('App listening on port 8080');

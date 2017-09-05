@@ -9,13 +9,13 @@ class LoginForm extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleErrors(response) {
-    if (!response.ok) {
-        throw new Error(response.json());
-    } else {
-    return response.json();
-    }
-  }
+  // handleErrors(response) {
+  //   if (!response.ok) {
+  //       throw new Error(response.json());
+  //   } else {
+  //   return response.json();
+  //   }
+  // }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -27,16 +27,24 @@ class LoginForm extends React.Component{
        "password": this.password.value
      })
     })
-    .then(response => {this.handleErrors(response)})
-    .then(response => {
-        console.log('success', response);
-    })
-    .catch((error) => {
-      console.log('error', error);
-     //show message only when there are problems with network!
-   })
+    .then(res => res.json()
+    .then(res => this.props.onLoginSubmit(res.msg))
+    .then(
+      // this.props.onLoginSuccess(),
+      console.log(res)
+    )
+    )
+    .catch(error => console.log('error': error))
+  //   .then(response => {this.handleErrors(response)})
+  //   .then(response => {
+  //       console.log('success', response);
+  //   })
+  //   .catch((error) => {
+  //     console.log('error', error);
+  //    //show message only when there are problems with network!
+  //  })
   }
-  
+
   render() {
     return(
       <form onSubmit={this.handleSubmit} method="post" className="form">

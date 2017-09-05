@@ -71,17 +71,17 @@ app.post('/api/user/login', function(req, res) {
          if (rows[0] !== undefined) {
             if(rows[0].password === password) {
                 res.status(200);
-                res.json({success_msg: 'Zalogowano poprawnie.',
+                res.json({msg: 'Zalogowano poprawnie.',
                         username: req.body.username,
                         token: uid(16)})
             } else {
                 res.status(400);
-                res.json({error_msg: 'Nieprawidłowe hasło.'})
+                res.json({msg: 'Nieprawidłowe hasło.'})
             }
          }
         else {
                 res.status(400);
-                res.json({error_msg: 'Konto o podanym adresie email nie istnieje.'});
+                res.json({msg: 'Konto o podanym adresie email nie istnieje.'});
             }
      })
 });

@@ -69,10 +69,17 @@ class RegisterForm extends React.Component{
       })
     })
     .then(res => res.json()
-      .then(data => ({data: data}))
-      .then(res => this.props.onRegisterSubmit(res.data.msg))
+      .then(res => this.props.onRegisterSubmit(res.msg))
+      .then(
+        this.props.onRegisterSuccess(),
+        console.log(res)
+      )
     )
     .catch(error => console.log('error': error))
+    // .then(res => console.log(res))
+    // .then(res => res.json())
+    // .then(res => this.props.onRegisterSubmit(res.msg))
+    // .catch(error => console.log('error': error))
   }
 
   render() {

@@ -13,6 +13,8 @@ class LoginRegister extends React.Component {
     this.handleRegisterClick = this.handleRegisterClick.bind(this);
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
     this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
+    this.handleRegisterSuccess = this.handleRegisterSuccess.bind(this);
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
 
     this.state = {
       isLogin: true,
@@ -38,9 +40,21 @@ class LoginRegister extends React.Component {
     })
   }
 
+  handleLoginSubmit(modal) {
+    this.setState({
+      modal: modal
+    })
+  }
+
   handleOnCloseClick() {
     this.setState({
       modal: ''
+    })
+  }
+
+  handleRegisterSuccess() {
+    this.setState({
+      isLogin: true
     })
   }
 
@@ -50,9 +64,9 @@ class LoginRegister extends React.Component {
     let modal = null;
 
     if (isLogin) {
-      myComponent = <LoginForm />
+      myComponent = <LoginForm onLoginSubmit={this.handleLoginSubmit}/>
     } else {
-      myComponent = <RegisterForm onRegisterSubmit={this.handleRegisterSubmit}/>
+      myComponent = <RegisterForm onRegisterSubmit={this.handleRegisterSubmit} onRegisterSuccess={this.handleRegisterSuccess}/>
     }
 
     if(this.state.modal !== '') {

@@ -124,14 +124,17 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 75px; }
+  width: auto;
+  min-width: 500px;
+  height: auto;
+  padding: 20px 16px; }
   .modal--success {
     background: green; }
   .modal--error {
     background: red; }
   .modal__info {
-    color: white; }
+    color: white;
+    text-align: center; }
   .modal__close {
     position: absolute;
     top: 5px;

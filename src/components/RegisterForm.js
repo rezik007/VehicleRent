@@ -54,31 +54,25 @@ class RegisterForm extends React.Component{
   }
 
   handleSubmit(e) {
-    // const messages = ['Invalid Password.', 'Your Registration was successfull! :)', 'Something went wrong! :(']
     e.preventDefault();
     if (!this.checkPassword()) {
       this.props.onRegisterSubmit('Invalid Password.');
       return;
     }
     fetch(apiURL + 'user/register', {
-     method: 'post',
-     headers: {'Content-Type':'application/json'},
-     body: JSON.stringify({
-       "username": this.username.value,
-       "email": this.email.value,
-       "password": this.password.value,
-     })
-   }).then(res =>
-     res.json().then(data => ({
-       data: data,
-       status: res.status
-     }))
-  ).then(res => {
-    this.props.onRegisterSubmit(res.data.success_msg);
-  }).catch((err) => {
-      console.log(err.json);
-    //  this.props.onRegisterSubmit(err.error_msg);
-   })
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        "username": this.username.value,
+        "email": this.email.value,
+        "password": this.password.value
+      })
+    })
+    .then(res => res.json()
+      .then(data => ({data: data}))
+      .then(res => this.props.onRegisterSubmit(res.data.msg))
+    )
+    .catch(error => console.log('error': error))
   }
 
   render() {

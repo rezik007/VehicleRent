@@ -50,16 +50,16 @@ app.post('/api/user/register', function(req, res) {
                 [req.body.username, req.body.email, password], function(err, rows, fields) {
                     if (err) {throw err}
                     res.status(201);
-                    res.json({success_msg: 'Your Registration was successfull! :): Konto zostało utworzone.'})
+                    res.json({msg: 'Your Registration was successfull! :): Konto zostało utworzone.'})
                 })
             } else {
                 res.status(400);
-                res.json({error_msg: 'Something went wrong! :( - Email lub nazwa użytkownika są już zajęte.'})
+                res.json({msg: 'Something went wrong! :( - Email lub nazwa użytkownika są już zajęte.'})
             }
         })
     } else {
         res.status(400);
-        res.json({error_msg: 'Something went wrong! :( - Niepoprawna nazwa użytkownik lub hasło.'})
+        res.json({msg: 'Something went wrong! :( - Niepoprawna nazwa użytkownik lub hasło.'})
     }
 });
 

@@ -71,7 +71,7 @@ app.post('/api/user/login', function(req, res) {
          if (rows[0] !== undefined) {
             if(rows[0].password === password) {
                 res.status(200);
-                res.json({msg: 'Zalogowano poprawnie.',
+                res.json({msg: 'Your Login was successfull! Zalogowano poprawnie.',
                         username: req.body.username,
                         token: uid(16)})
             } else {

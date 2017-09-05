@@ -15,6 +15,7 @@ class LoginRegister extends React.Component {
     this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
     this.handleRegisterSuccess = this.handleRegisterSuccess.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
 
     this.state = {
       isLogin: true,
@@ -58,13 +59,17 @@ class LoginRegister extends React.Component {
     })
   }
 
+  handleLoginSuccess() {
+    console.log('super');
+  }
+
   render() {
     const isLogin = this.state.isLogin;
     let myComponent = null;
     let modal = null;
 
     if (isLogin) {
-      myComponent = <LoginForm onLoginSubmit={this.handleLoginSubmit}/>
+      myComponent = <LoginForm onLoginSubmit={this.handleLoginSubmit} onLoginSuccess={this.handleLoginSuccess}/>
     } else {
       myComponent = <RegisterForm onRegisterSubmit={this.handleRegisterSubmit} onRegisterSuccess={this.handleRegisterSuccess}/>
     }

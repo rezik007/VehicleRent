@@ -9,14 +9,6 @@ class LoginForm extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // handleErrors(response) {
-  //   if (!response.ok) {
-  //       throw new Error(response.json());
-  //   } else {
-  //   return response.json();
-  //   }
-  // }
-
   handleSubmit(e) {
     e.preventDefault();
     fetch(apiURL + 'user/login', {
@@ -28,21 +20,16 @@ class LoginForm extends React.Component{
      })
     })
     .then(res => res.json()
-    .then(res => this.props.onLoginSubmit(res.msg))
-    .then(
-      // this.props.onLoginSuccess(),
-      console.log(res)
-    )
+      .then(res => this.props.onLoginSubmit(res.msg))
+      .then(
+        () => {
+          if(res.status < 300) {
+            this.props.onLoginSuccess()
+          }
+        }
+      )
     )
     .catch(error => console.log('error': error))
-  //   .then(response => {this.handleErrors(response)})
-  //   .then(response => {
-  //       console.log('success', response);
-  //   })
-  //   .catch((error) => {
-  //     console.log('error', error);
-  //    //show message only when there are problems with network!
-  //  })
   }
 
   render() {

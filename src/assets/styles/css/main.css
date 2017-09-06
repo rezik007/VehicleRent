@@ -120,7 +120,7 @@ a {
 .modal {
   position: absolute;
   top: 25px;
-  left: 50% 50%;
+  left: calc(50% - 500px/2);
   display: flex;
   justify-content: center;
   align-items: center;

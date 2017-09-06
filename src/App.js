@@ -8,6 +8,8 @@ import Hamburger from './components/Hamburger';
 //Addaed "react-resize-detector" package, that helps with running functions at screen resize
 //Every time the window is resized, onResize function is called
 //OnResize function is changeing the this.state.width to current windows width
+//This component is holding loggedIn value, which is false in it's state
+//LoggedIn value changes to true when user is successfully loggedIn
 
 class App extends React.Component {
   constructor() {
@@ -15,10 +17,12 @@ class App extends React.Component {
 
     this.handleHideNav = this.handleHideNav.bind(this);
     this.onResize = this.onResize.bind(this);
+    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
 
     this.state = {
       hamburgerClick: true,
-      width: window.innerWidth
+      width: window.innerWidth,
+      loggedIn: false
     }
   }
 
@@ -34,12 +38,18 @@ class App extends React.Component {
     })
   }
 
+  handleLoginSuccess() {
+    this.setState({
+      loggedIn: true
+    })
+  }
+
   render() {
     let nav = null;
     let hamburger = null;
 
     if(!this.state.hamburgerClick || this.state.width > 640) {
-      nav = <Nav/>;
+      nav = <Nav isLoggedIn={this.state.loggedIn}/>;
     }
 
     if(this.state.width <= 640) {
@@ -51,7 +61,7 @@ class App extends React.Component {
         <ReactResizeDetector handleWidth onResize={this.onResize} />
         {hamburger}
         {nav}
-        <Main/>
+        <Main isLoggedIn={this.state.loggedIn} onLoginSuccess={this.handleLoginSuccess}/>
       </div>
     );
   }

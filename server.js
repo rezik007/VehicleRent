@@ -72,7 +72,7 @@ app.post('/api/user/login', function(req, res) {
             if(rows[0].password === password) {
                 res.status(200);
                 res.json({msg: 'Your Login was successfull! Zalogowano poprawnie.',
-                        username: req.body.username,
+                        username: req.body,
                         token: uid(16)})
             } else {
                 res.status(400);
@@ -85,6 +85,12 @@ app.post('/api/user/login', function(req, res) {
             }
      })
 });
+
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 console.log('App listening on port 8080');

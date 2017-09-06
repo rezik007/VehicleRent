@@ -1,5 +1,6 @@
 import React from 'react';
 import apiURL from '../config';
+
 //Simple component that renders form element
 //It uses action attribute to POST login
 
@@ -20,7 +21,10 @@ class LoginForm extends React.Component{
      })
     })
     .then(res => res.json()
-      .then(res => this.props.onLoginSubmit(res.msg))
+      .then(res => {
+        this.props.onLoginSubmit(res.msg)
+        this.props.sendUsername(res.username.email)
+      })
       .then(
         () => {
           if(res.status < 300) {
@@ -29,7 +33,7 @@ class LoginForm extends React.Component{
         }
       )
     )
-    .catch(error => console.log('error': error))
+    .catch(err => console.log(err: err))
   }
 
   render() {

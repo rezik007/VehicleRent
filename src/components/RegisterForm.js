@@ -78,7 +78,7 @@ class RegisterForm extends React.Component{
         }
       )
     )
-    .catch(error => console.log('error': error))
+    .catch(err => console.log(err: err))
   }
 
   render() {

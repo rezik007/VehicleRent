@@ -54,27 +54,30 @@ class RegisterForm extends React.Component{
   }
 
   handleSubmit(e) {
-    const messages = ['Invalid Password.', 'Your Registration was successfull! :)', 'Something went wrong! :(']
     e.preventDefault();
     if (!this.checkPassword()) {
-      this.props.onRegisterSubmit(messages[0]);
+      this.props.onRegisterSubmit('Invalid Password.');
       return;
     }
-    fetch(apiURL + 'api/createAccount', {
-     method: 'post',
-     headers: {'Content-Type':'application/json'},
-     body: JSON.stringify({
-       "username": this.username.value,
-       "email": this.email.value,
-       "password": this.password.value,
-     })
-   }).then((res) => {
-     console.log('success', res.status);
-     this.props.onRegisterSubmit(messages[1]);
-   }).catch((err) => {
-     console.error(err);
-     this.props.onRegisterSubmit(messages[2]);
-   })
+    fetch(apiURL + 'user/register', {
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        "email": this.email.value,
+        "password": this.password.value
+      })
+    })
+    .then(res => res.json()
+      .then(res => this.props.onRegisterSubmit(res.msg))
+      .then(
+        () => {
+          if(res.status < 300) {
+            this.props.onRegisterSuccess()
+          }
+        }
+      )
+    )
+    .catch(err => console.log(err: err))
   }
 
   render() {
@@ -86,7 +89,6 @@ class RegisterForm extends React.Component{
 
     return(
       <form onSubmit={this.handleSubmit} className="form">
-        <input ref={(ref) => {this.username = ref}} type="text" name="username" className="form__input" placeholder="Username" required/>
         <input ref={(ref) => {this.email = ref}} type="email" name="email" className="form__input" placeholder="Email" required/>
         {passwordLabel}
         <input id="password" onKeyUp={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import apiURL from '../config';
+
 //Simple component that renders form element
 //It uses action attribute to POST login
 
@@ -11,25 +12,34 @@ class LoginForm extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault();
-    fetch(apiURL + 'api/login', {
+    fetch(apiURL + 'user/login', {
      method: 'post',
      headers: {'Content-Type':'application/json'},
      body: JSON.stringify({
-       "username": this.username.value,
+       "email": this.email.value,
        "password": this.password.value
      })
-   }).then((res) => {
-     console.log('success', res.status);
-     alert("super");
-   }).catch((err) => {
-     console.error(err, "asdasd");
-   })
+    })
+    .then(res => res.json()
+      .then(res => {
+        this.props.onLoginSubmit(res.msg)
+        this.props.sendUsername(res.email)
+      })
+      .then(
+        () => {
+          if(res.status < 300) {
+            this.props.onLoginSuccess()
+          }
+        }
+      )
+    )
+    .catch(err => console.log(err: err))
   }
 
   render() {
     return(
       <form onSubmit={this.handleSubmit} method="post" className="form">
-        <input ref={(ref) => {this.username = ref}} type="text" name="name" className="form__input" placeholder="Username" required/>
+        <input ref={(ref) => {this.email = ref}} type="text" name="email" className="form__input" placeholder="email" required/>
         <input ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
         <div>
           <input type="checkbox" className="form__remember" name="remember" id="remember"/>

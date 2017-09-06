@@ -23,7 +23,7 @@ class LoginForm extends React.Component{
     .then(res => res.json()
       .then(res => {
         this.props.onLoginSubmit(res.msg)
-        this.props.sendUsername(res.username.email)
+        this.props.sendUsername(res.email)
       })
       .then(
         () => {

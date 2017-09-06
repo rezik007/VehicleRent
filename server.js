@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
   database : 'rezik007_vehiclerent'
 });
 
-connection.connect()
+connection.connect();
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));                                         // log every request to the console
@@ -30,12 +30,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
 });
 
 // routes ======================================================================
@@ -72,7 +66,7 @@ app.post('/api/user/login', function(req, res) {
             if(rows[0].password === password) {
                 res.status(200);
                 res.json({msg: 'Your Login was successfull! Zalogowano poprawnie.',
-                        username: req.body,
+                        email: req.body.email,
                         token: uid(16)})
             } else {
                 res.status(400);

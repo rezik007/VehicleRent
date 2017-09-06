@@ -63,7 +63,6 @@ class RegisterForm extends React.Component{
       method: 'post',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        "username": this.username.value,
         "email": this.email.value,
         "password": this.password.value
       })
@@ -90,7 +89,6 @@ class RegisterForm extends React.Component{
 
     return(
       <form onSubmit={this.handleSubmit} className="form">
-        <input ref={(ref) => {this.username = ref}} type="text" name="username" className="form__input" placeholder="Username" required/>
         <input ref={(ref) => {this.email = ref}} type="email" name="email" className="form__input" placeholder="Email" required/>
         {passwordLabel}
         <input id="password" onKeyUp={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>

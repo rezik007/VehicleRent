@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));            // parse applicatio
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -34,14 +34,14 @@ app.use(function(req, res, next) {
 
 // routes ======================================================================
 
-app.post('/api/user/register', function(req, res) {
-    if(validator.isAlphanumeric(req.body.username) && validator.isEmail(req.body.email)) {
-        connection.query('SELECT password FROM `users` WHERE email=? OR name=?', [req.body.email, req.body.username], function(err, rows, fields) {
+app.post('/api/user/register', (req, res) => {
+    if(validator.isEmail(req.body.email)) {
+        connection.query('SELECT password FROM `users` WHERE email=?', [req.body.email], (err, rows, fields) => {
             if (err) {throw err}
             if (rows[0] === undefined) {
                 let password = crypto.createHash('md5').update(req.body.password).digest('hex')
-                connection.query('INSERT INTO `users` (name, email, password) VALUES (?, ?, ?);',
-                [req.body.username, req.body.email, password], function(err, rows, fields) {
+                connection.query('INSERT INTO `users` (email, password) VALUES (?, ?);',
+                [req.body.email, password], (err, rows, fields) => {
                     if (err) {throw err}
                     res.status(201);
                     res.json({msg: 'Your Registration was successfull! :): Konto zostało utworzone.'})
@@ -57,10 +57,10 @@ app.post('/api/user/register', function(req, res) {
     }
 });
 
-app.post('/api/user/login', function(req, res) {
+app.post('/api/user/login', (req, res) => {
     let password = crypto.createHash('md5').update(req.body.password).digest('hex')
     connection.query('SELECT password FROM `users` WHERE email=?', [req.body.email],
-     function(err, rows, fields) {
+     (err, rows, fields) => {
         if (err) {throw err}
          if (rows[0] !== undefined) {
             if(rows[0].password === password) {

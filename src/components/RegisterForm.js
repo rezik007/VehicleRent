@@ -56,7 +56,7 @@ class RegisterForm extends React.Component{
   handleSubmit(e) {
     e.preventDefault();
     if (!this.checkPassword()) {
-      this.props.onRegisterSubmit('Invalid Password.');
+      this.props.onRegisterSubmit('Invalid Password.', 'error');
       return;
     }
     fetch(apiURL + 'user/register', {
@@ -67,18 +67,18 @@ class RegisterForm extends React.Component{
         "password": this.password.value
       })
     })
-    .then(res => res.json()
-      .then(res => this.props.onRegisterSubmit(res.msg))
-      .then(
-        () => {
-          if(res.status < 300) {
-            this.props.onRegisterSuccess()
-          }
-        }
-      )
-    )
-    .catch(err => console.log(err: err))
-  }
+    .then((response) => {
+       let msgType;
+       if(response.status === 201) {
+         msgType = 'success';
+       } else {
+         msgType = 'error';
+       }
+      response.json().then((obj) => {
+      this.props.onRegisterSubmit(obj.msg, msgType);
+      })
+    })
+}
 
   render() {
     let passwordLabel = null;

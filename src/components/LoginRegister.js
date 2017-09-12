@@ -15,7 +15,6 @@ class LoginRegister extends React.Component {
     this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
     this.handleRegisterSuccess = this.handleRegisterSuccess.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
     this.handleSendUsername = this.handleSendUsername.bind(this);
 
     this.state = {
@@ -35,12 +34,12 @@ class LoginRegister extends React.Component {
     });
   }
 
-  handleRegisterSubmit(modal) {
-    this.props.onRegisterSubmit(modal);
+  handleRegisterSubmit(modal, type) {
+    this.props.onRegisterSubmit(modal, type);
   }
 
-  handleLoginSubmit(modal) {
-    this.props.onLoginSubmit(modal);
+  handleLoginSubmit(modal, type) {
+    this.props.onLoginSubmit(modal, type);
   }
 
   handleOnCloseClick() {
@@ -55,10 +54,6 @@ class LoginRegister extends React.Component {
     })
   }
 
-  handleLoginSuccess() {
-    this.props.onLoginSuccess();
-  }
-
   handleSendUsername(username) {
     this.props.sendUsername(username);
   }
@@ -68,7 +63,7 @@ class LoginRegister extends React.Component {
     let myComponent = null;
 
     if (isLogin) {
-      myComponent = <LoginForm onLoginSubmit={this.handleLoginSubmit} onLoginSuccess={this.handleLoginSuccess} sendUsername={this.handleSendUsername}/>
+      myComponent = <LoginForm onLoginSubmit={this.handleLoginSubmit} sendUsername={this.handleSendUsername}/>
     } else {
       myComponent = <RegisterForm onRegisterSubmit={this.handleRegisterSubmit} onRegisterSuccess={this.handleRegisterSuccess}/>
     }

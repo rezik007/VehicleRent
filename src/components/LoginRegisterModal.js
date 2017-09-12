@@ -1,6 +1,8 @@
 import React from 'react';
 
 class LoginRegisterModal extends React.Component {
+
+  myClass = null;
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -11,15 +13,15 @@ class LoginRegisterModal extends React.Component {
   }
 
   render() {
-    let myClass = null;
-    if (this.props.value.slice(0, 1) === 'Y') {
-      myClass = "modal--success"
+
+    if (this.props.type === 'success') {
+      this.myClass = "modal--success";
+      
     } else {
-      myClass = "modal--error"
+      this.myClass = "modal--error";
     }
-    
     return (
-      <div className={"modal " + myClass}>
+      <div className={"modal " + this.myClass}>
         <p className="modal__close" onClick={this.handleClick}>x</p>
         <p className="modal__info">{this.props.value}</p>
       </div>

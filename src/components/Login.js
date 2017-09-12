@@ -8,22 +8,17 @@ class Login extends React.Component {
   constructor() {
     super();
 
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
     this.handleSendUsername = this.handleSendUsername.bind(this);
   }
 
-  handleRegisterSubmit(modal) {
-    this.props.onRegisterSubmit(modal);
+  handleRegisterSubmit(modal, type) {
+    this.props.onRegisterSubmit(modal, type);
   }
 
-  handleLoginSubmit(modal) {
-    this.props.onLoginSubmit(modal);
-  }
-
-  handleLoginSuccess() {
-    this.props.onLoginSuccess();
+  handleLoginSubmit(modal, type) {
+    this.props.onLoginSubmit(modal, type);
   }
 
   handleSendUsername(username) {
@@ -33,7 +28,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="section two">
-        <LoginRegister onLoginSuccess={this.handleLoginSuccess} onLoginSubmit={this.handleLoginSubmit} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>
+        <LoginRegister onLoginSubmit={this.handleLoginSubmit} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>
       </div>
     );
   }

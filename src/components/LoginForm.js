@@ -20,26 +20,23 @@ class LoginForm extends React.Component{
        "password": this.password.value
      })
     })
-    .then(res => res.json()
-      .then(res => {
-        this.props.onLoginSubmit(res.msg)
-        this.props.sendUsername(res.email)
+    .then((response) => {
+       let msgType;
+       if(response.status === 200) {
+         msgType = 'success';
+       } else {
+         msgType = 'error';
+       }
+      response.json().then((obj) => {
+      this.props.onLoginSubmit(obj.msg, msgType);
       })
-      .then(
-        () => {
-          if(res.status < 300) {
-            this.props.onLoginSuccess()
-          }
-        }
-      )
-    )
-    .catch(err => console.log(err: err))
-  }
+    })
+}
 
   render() {
     return(
       <form onSubmit={this.handleSubmit} method="post" className="form">
-        <input ref={(ref) => {this.email = ref}} type="text" name="email" className="form__input" placeholder="email" required/>
+        <input ref={(ref) => {this.email = ref}} type="text" name="email" className="form__input" placeholder="Email" required/>
         <input ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
         <div>
           <input type="checkbox" className="form__remember" name="remember" id="remember"/>

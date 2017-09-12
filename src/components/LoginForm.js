@@ -24,6 +24,9 @@ class LoginForm extends React.Component{
        let msgType;
        if(response.status === 200) {
          msgType = 'success';
+         console.log(response);
+         this.props.sendUsername(this.email.value);
+         this.props.onLoginSuccess();
        } else {
          msgType = 'error';
        }

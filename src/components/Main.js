@@ -20,6 +20,7 @@ class Main extends React.Component {
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
     this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
     this.handleSendUsername = this.handleSendUsername.bind(this);
+    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
 
     this.state = {
       modal: '',
@@ -46,6 +47,10 @@ class Main extends React.Component {
       modal: modal,
       type: type
     })
+  }
+  
+  handleLoginSuccess() {
+    this.props.onLoginSuccess()
   }
 
   handleSendUsername(username) {
@@ -76,7 +81,7 @@ class Main extends React.Component {
           <Route path='/login' render={() => (
               loggedIn
               ? (<Redirect to="/"/>)
-              : (<Login onLoginSubmit={this.handleLoginSubmit} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>)
+              : (<Login onLoginSubmit={this.handleLoginSubmit} onLoginSuccess={this.handleLoginSuccess} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>)
             )} />
         </Switch>
       </div>

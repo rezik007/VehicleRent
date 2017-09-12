@@ -8,12 +8,6 @@ import {Link} from 'react-router-dom';
 //Logout button onClick is fetching '/logout', and
 
 class Nav extends React.Component {
-  constructor() {
-    super();
-
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-  }
-
   handleLogoutClick() {
     fetch('/logout', {
       method: 'POST'
@@ -26,7 +20,7 @@ class Nav extends React.Component {
     let loginLogout = null;
 
     if(isLoggedIn) {
-      loginLogout = <button onClick={this.handleLogoutClick} className="nav__link">LogOut</button>
+      loginLogout = <button onClick={() => this.handleLogoutClick()} className="nav__link">LogOut</button>
     } else {
       loginLogout = <Link to='/login'><button className="nav__link">LogIn</button></Link>
     }

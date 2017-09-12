@@ -5,15 +5,6 @@ import LoginRegister from './LoginRegister';
 //it passes modal, username, and loginSuccess values to its parents
 
 class Login extends React.Component {
-  constructor() {
-    super();
-
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
-    this.handleSendUsername = this.handleSendUsername.bind(this);
-  }
-
   handleLoginSuccess() {
     this.props.onLoginSuccess();
   }
@@ -33,7 +24,11 @@ class Login extends React.Component {
   render() {
     return (
       <div className="section two">
-        <LoginRegister onLoginSuccess={this.handleLoginSuccess} onLoginSubmit={this.handleLoginSubmit} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>
+        <LoginRegister
+          onLoginSuccess={() => this.handleLoginSuccess()}
+          onLoginSubmit={(modal, type) => this.handleLoginSubmit(modal, type)}
+          onRegisterSubmit={(modal, type) => this.handleRegisterSubmit(modal, type)}
+          sendUsername={(username) => this.handleSendUsername(username)}/>
       </div>
     );
   }

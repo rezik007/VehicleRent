@@ -8,10 +8,6 @@ class RegisterForm extends React.Component{
   constructor(props) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleRepeatPasswordChange = this.handleRepeatPasswordChange.bind(this);
-
     this.state = {
       password: '',
       repeatPassword: '',
@@ -80,11 +76,24 @@ class RegisterForm extends React.Component{
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit} className="form">
-        <input ref={(ref) => {this.email = ref}} type="email" name="email" id="email" className="form__input" placeholder="Email" required/>
-        {!this.state.areTheSame ? <label htmlFor="password" className="form__passwordCompare">Passwords do not match!</label> : ''}
-        <input id="password" onChange={this.handlePasswordChange} ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
-        <input onChange={this.handleRepeatPasswordChange} type="password" name="confirm-password" className="form__input" placeholder="Confirm Password" required/>
+      <form className="form"
+        onSubmit={(e) => this.handleSubmit(e)}
+      >
+        <input type="email" name="email" id="email" className="form__input" placeholder="Email" required
+          ref={(ref) => {this.email = ref}}
+        />
+        {
+          !this.state.areTheSame
+          ? <label htmlFor="password" className="form__passwordCompare">Passwords do not match!</label>
+          : ''
+        }
+        <input id="password" type="password" name="password" className="form__input" placeholder="Password" required
+          onChange={(e) => this.handlePasswordChange(e)}
+          ref={(ref) => {this.password = ref}}
+          />
+        <input type="password" name="confirm-password" className="form__input" placeholder="Confirm Password" required
+          onChange={(e) => this.handleRepeatPasswordChange(e)}
+        />
         <button type="submit" className="form__submit">Register</button>
       </form>
     )

@@ -10,17 +10,11 @@ import LoginRegisterModal from './LoginRegisterModal';
 //Each Route has path that corresonds with Link's "to" from Nav component
 //Main renders only one component Home, About, or Login
 //This component render modals msgs when user try register/login
-//This compoennt rerender different content depends on if user is loggedIn 
+//This compoennt rerender different content depends on if user is loggedIn
 
 class Main extends React.Component {
   constructor() {
     super();
-
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
-    this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
-    this.handleSendUsername = this.handleSendUsername.bind(this);
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
 
     this.state = {
       modal: '',
@@ -48,7 +42,7 @@ class Main extends React.Component {
       type: type
     })
   }
-  
+
   handleLoginSuccess() {
     this.props.onLoginSuccess()
   }
@@ -69,7 +63,11 @@ class Main extends React.Component {
     }
 
     if(this.state.modal !== '') {
-      modal = <LoginRegisterModal value={this.state.modal} type={this.state.type} onCloseClick={this.handleOnCloseClick}/>
+      modal = <LoginRegisterModal
+                value={this.state.modal}
+                type={this.state.type}
+                onCloseClick={() => this.handleOnCloseClick()}
+              />
     }
 
     return (
@@ -81,7 +79,12 @@ class Main extends React.Component {
           <Route path='/login' render={() => (
               loggedIn
               ? (<Redirect to="/"/>)
-              : (<Login onLoginSubmit={this.handleLoginSubmit} onLoginSuccess={this.handleLoginSuccess} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>)
+              : (<Login
+                  onLoginSubmit={(modal, type) => this.handleLoginSubmit(modal, type)}
+                  onLoginSuccess={() => this.handleLoginSuccess()}
+                  onRegisterSubmit={(modal, type) => this.handleRegisterSubmit(modal, type)}
+                  sendUsername={(username) => this.handleSendUsername(username)}
+                />)
             )} />
         </Switch>
       </div>

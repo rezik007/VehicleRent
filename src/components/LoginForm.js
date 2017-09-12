@@ -5,11 +5,6 @@ import apiURL from '../config';
 //It uses action attribute to POST login
 
 class LoginForm extends React.Component{
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     fetch(apiURL + 'user/login', {
@@ -38,9 +33,9 @@ class LoginForm extends React.Component{
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit} method="post" className="form">
-        <input ref={(ref) => {this.email = ref}} type="text" name="email" className="form__input" placeholder="Email" required/>
-        <input ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
+      <form method="post" className="form" onSubmit={(e) => this.handleSubmit(e)} >
+        <input type="text" name="email" className="form__input" placeholder="Email" required ref={(ref) => {this.email = ref}}/>
+        <input type="password" name="password" className="form__input" placeholder="Password" required ref={(ref) => {this.password = ref}}/>
         <div>
           <input type="checkbox" className="form__remember" name="remember" id="remember"/>
           <label htmlFor="remember">Remember me</label>

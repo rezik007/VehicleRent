@@ -15,10 +15,6 @@ class App extends React.Component {
   constructor() {
     super();
 
-    this.handleHideNav = this.handleHideNav.bind(this);
-    this.onResize = this.onResize.bind(this);
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
-
     this.state = {
       hamburgerClick: true,
       width: window.innerWidth,
@@ -53,15 +49,16 @@ class App extends React.Component {
     }
 
     if(this.state.width <= 640) {
-      hamburger = <Hamburger hideNav={this.handleHideNav}/>;
+      hamburger = <Hamburger hideNav={() => this.handleHideNav()}/>;
     }
 
     return (
       <div>
-        <ReactResizeDetector handleWidth onResize={this.onResize} />
+        <ReactResizeDetector handleWidth onResize={() => this.onResize()}/>
         {hamburger}
         {nav}
-        <Main isLoggedIn={this.state.loggedIn} onLoginSuccess={this.handleLoginSuccess}/>
+        <Main isLoggedIn={this.state.loggedIn} onLoginSuccess={() => this.handleLoginSuccess()}
+        />
       </div>
     );
   }

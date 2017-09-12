@@ -9,15 +9,6 @@ class LoginRegister extends React.Component {
   constructor() {
     super();
 
-    this.handleLoginClick = this.handleLoginClick.bind(this);
-    this.handleRegisterClick = this.handleRegisterClick.bind(this);
-    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
-    this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
-    this.handleRegisterSuccess = this.handleRegisterSuccess.bind(this);
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleSendUsername = this.handleSendUsername.bind(this);
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
-
     this.state = {
       isLogin: true
     }
@@ -47,12 +38,6 @@ class LoginRegister extends React.Component {
     this.props.onLoginSubmit(modal, type);
   }
 
-  handleOnCloseClick() {
-    this.setState({
-      modal: ''
-    })
-  }
-
   handleRegisterSuccess() {
     this.setState({
       isLogin: true
@@ -68,16 +53,31 @@ class LoginRegister extends React.Component {
     let myComponent = null;
 
     if (isLogin) {
-      myComponent = <LoginForm onLoginSubmit={this.handleLoginSubmit} onLoginSuccess={this.handleLoginSuccess} sendUsername={this.handleSendUsername}/>
+      myComponent = <LoginForm
+                      onLoginSubmit={(modal, type) => this.handleLoginSubmit(modal, type)}
+                      onLoginSuccess={() => this.handleLoginSuccess()}
+                      sendUsername={(username) => this.handleSendUsername(username)}
+                    />
     } else {
-      myComponent = <RegisterForm onRegisterSubmit={this.handleRegisterSubmit} onRegisterSuccess={this.handleRegisterSuccess}/>
+      myComponent = <RegisterForm
+                      onRegisterSubmit={(modal, type) => this.handleRegisterSubmit(modal, type)}
+                      onRegisterSuccess={() => this.handleRegisterSuccess()}
+                    />
     }
 
     return (
       <div className="loginRegister">
         <div className="navigation">
-          <button className="navigation__login" onClick={this.handleLoginClick} value={this.state.isLogin}>Login</button>
-          <button className="navigation__register" onClick={this.handleRegisterClick} value={this.state.isLogin}>Register</button>
+          <button className="navigation__login"
+            onClick={() => this.handleLoginClick()}
+            value={this.state.isLogin}>
+            Login
+          </button>
+          <button className="navigation__register"
+            onClick={() => this.handleRegisterClick()}
+            value={this.state.isLogin}>
+            Register
+          </button>
         </div>
         <div className="body">
           {myComponent}

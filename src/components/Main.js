@@ -1,29 +1,24 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import LoginRegisterModal from './LoginRegisterModal';
 
 import Home from './Home';
 import About from './About';
 import Login from './Login';
+import LoginRegisterModal from './LoginRegisterModal';
 
 //Main uses Switch for group of routes
 //Each Route has path that corresonds with Link's "to" from Nav component
 //Main renders only one component Home, About, or Login
 //This component render modals msgs when user try register/login
-//This compoennt rerender different content depends on if user is loggedIn 
+//This compoennt rerender different content depends on if user is loggedIn
 
 class Main extends React.Component {
   constructor() {
     super();
 
-    this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
-    this.handleOnCloseClick = this.handleOnCloseClick.bind(this);
-    this.handleSendUsername = this.handleSendUsername.bind(this);
-
     this.state = {
       modal: '',
+      type: '',
       username: ''
     }
   }
@@ -34,15 +29,17 @@ class Main extends React.Component {
     })
   }
 
-  handleRegisterSubmit(modal) {
+  handleRegisterSubmit(modal, type) {
     this.setState({
-      modal: modal
+      modal: modal,
+      type: type
     })
   }
 
-  handleLoginSubmit(modal) {
+  handleLoginSubmit(modal, type) {
     this.setState({
-      modal: modal
+      modal: modal,
+      type: type
     })
   }
 
@@ -66,7 +63,11 @@ class Main extends React.Component {
     }
 
     if(this.state.modal !== '') {
-      modal = <LoginRegisterModal value={this.state.modal} onCloseClick={this.handleOnCloseClick}/>
+      modal = <LoginRegisterModal
+                value={this.state.modal}
+                type={this.state.type}
+                onCloseClick={() => this.handleOnCloseClick()}
+              />
     }
 
     return (
@@ -78,7 +79,12 @@ class Main extends React.Component {
           <Route path='/login' render={() => (
               loggedIn
               ? (<Redirect to="/"/>)
-              : (<Login onLoginSuccess={this.handleLoginSuccess} onLoginSubmit={this.handleLoginSubmit} onRegisterSubmit={this.handleRegisterSubmit} sendUsername={this.handleSendUsername}/>)
+              : (<Login
+                  onLoginSubmit={(modal, type) => this.handleLoginSubmit(modal, type)}
+                  onLoginSuccess={() => this.handleLoginSuccess()}
+                  onRegisterSubmit={(modal, type) => this.handleRegisterSubmit(modal, type)}
+                  sendUsername={(username) => this.handleSendUsername(username)}
+                />)
             )} />
         </Switch>
       </div>

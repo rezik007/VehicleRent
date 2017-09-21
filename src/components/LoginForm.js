@@ -5,11 +5,6 @@ import apiURL from '../config';
 //It uses action attribute to POST login
 
 class LoginForm extends React.Component{
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     fetch(apiURL + 'user/login', {
@@ -20,27 +15,27 @@ class LoginForm extends React.Component{
        "password": this.password.value
      })
     })
-    .then(res => res.json()
-      .then(res => {
-        this.props.onLoginSubmit(res.msg)
-        this.props.sendUsername(res.email)
+    .then((response) => {
+       let msgType;
+       if(response.status === 200) {
+         msgType = 'success';
+         console.log(response);
+         this.props.sendUsername(this.email.value);
+         this.props.onLoginSuccess();
+       } else {
+         msgType = 'error';
+       }
+      response.json().then((obj) => {
+      this.props.onLoginSubmit(obj.msg, msgType);
       })
-      .then(
-        () => {
-          if(res.status < 300) {
-            this.props.onLoginSuccess()
-          }
-        }
-      )
-    )
-    .catch(err => console.log(err: err))
-  }
+    })
+}
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit} method="post" className="form">
-        <input ref={(ref) => {this.email = ref}} type="text" name="email" className="form__input" placeholder="email" required/>
-        <input ref={(ref) => {this.password = ref}} type="password" name="password" className="form__input" placeholder="Password" required/>
+      <form method="post" className="form" onSubmit={(e) => this.handleSubmit(e)} >
+        <input type="text" name="email" className="form__input" placeholder="Email" required ref={(ref) => {this.email = ref}}/>
+        <input type="password" name="password" className="form__input" placeholder="Password" required ref={(ref) => {this.password = ref}}/>
         <div>
           <input type="checkbox" className="form__remember" name="remember" id="remember"/>
           <label htmlFor="remember">Remember me</label>

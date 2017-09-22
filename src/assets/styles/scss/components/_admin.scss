@@ -1,0 +1,27 @@
+.h1__header {
+    text-align: center;
+}
+
+.nav {
+
+    &__admin {
+     border-bottom: none;
+     border-right: 1px solid black;
+     width: 150px;
+     height: 100vh;
+     vertical-align: top;
+     float: left;
+     
+     a {
+         display: inline-block;
+         vertical-align: top;
+     }
+  }
+}
+
+.admin {
+    &__container {
+        display: inline-block;
+        width: 80%;
+    }
+}

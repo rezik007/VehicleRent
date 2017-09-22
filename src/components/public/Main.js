@@ -4,7 +4,9 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import Home from './Home';
 import About from './About';
 import Login from './Login';
-import LoginRegisterModal from './LoginRegisterModal';
+import Modal from '../shared/Modal';
+
+import MainAdmin from '../admin/MainAdmin';
 
 //Main uses Switch for group of routes
 //Each Route has path that corresonds with Link's "to" from Nav component
@@ -56,14 +58,14 @@ class Main extends React.Component {
   render() {
     let loggedIn = this.props.isLoggedIn;
     let modal = null;
-    let myHome = (props) =>{
+    let myHome = (props) => {
       return (
         <Home username={this.state.username}/>
       )
     }
 
     if(this.state.modal !== '') {
-      modal = <LoginRegisterModal
+      modal = <Modal
                 value={this.state.modal}
                 type={this.state.type}
                 onCloseClick={() => this.handleOnCloseClick()}
@@ -86,6 +88,7 @@ class Main extends React.Component {
                   sendUsername={(username) => this.handleSendUsername(username)}
                 />)
             )} />
+          <Route path='/admin/' component={MainAdmin} />
         </Switch>
       </div>
     );

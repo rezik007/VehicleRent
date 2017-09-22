@@ -17,10 +17,11 @@ class Nav extends React.Component {
 
   render() {
     let isLoggedIn = this.props.isLoggedIn;
-    let loginLogout = null;
+    let loginLogout = null, adminAccess = null;
 
     if(isLoggedIn) {
       loginLogout = <button onClick={() => this.handleLogoutClick()} className="nav__link">LogOut</button>
+      adminAccess = <Link to='/admin/'><button className="nav__link">Admin Panel</button></Link>
     } else {
       loginLogout = <Link to='/login'><button className="nav__link">LogIn</button></Link>
     }
@@ -32,6 +33,7 @@ class Nav extends React.Component {
             <Link to='/'><button className="nav__link">Home</button></Link>
             <Link to='/about'><button className="nav__link">About</button></Link>
             {loginLogout}
+            {adminAccess}
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
-import Nav from './components/Nav';
-import Main from './components/Main';
-import Hamburger from './components/Hamburger';
+import Nav from './components/public/Nav';
+import Main from './components/public/Main';
+import Hamburger from './components/public/Hamburger';
+
+import MainAdmin from './components/admin/MainAdmin';
 
 //Base component that renders Nav, Main and Hamburger
 //Addaed "react-resize-detector" package, that helps with running functions at screen resize
@@ -18,7 +20,8 @@ class App extends React.Component {
     this.state = {
       hamburgerClick: true,
       width: window.innerWidth,
-      loggedIn: false
+      loggedIn: false,
+      adminPanel: false,
     }
   }
 
@@ -40,6 +43,12 @@ class App extends React.Component {
     })
   }
 
+  handleAdminAccess() {
+    this.setState({
+      adminPanel: true
+    })
+  }
+
   render() {
     let nav = null;
     let hamburger = null;
@@ -51,16 +60,24 @@ class App extends React.Component {
     if(this.state.width <= 640) {
       hamburger = <Hamburger hideNav={() => this.handleHideNav()}/>;
     }
-
-    return (
-      <div>
-        <ReactResizeDetector handleWidth onResize={() => this.onResize()}/>
-        {hamburger}
-        {nav}
-        <Main isLoggedIn={this.state.loggedIn} onLoginSuccess={() => this.handleLoginSuccess()}
-        />
-      </div>
-    );
+    if(!this.state.adminPanel) {
+      return (
+        <div>
+          <ReactResizeDetector handleWidth onResize={() => this.onResize()}/>
+          {hamburger}
+          {nav}
+          <Main isLoggedIn={this.state.loggedIn} onLoginSuccess={() => this.handleLoginSuccess()} onAdminAccess={() => this.handleAdminAccess()}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+            <ReactResizeDetector handleWidth onResize={() => this.onResize()}/>
+            <MainAdmin />
+        </div>
+      )
+    }
   }
 }
 

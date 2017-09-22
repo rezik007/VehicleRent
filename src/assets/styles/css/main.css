@@ -172,3 +172,21 @@ a {
   background: black;
   cursor: pointer;
   z-index: 1; }
+
+.h1__header {
+  text-align: center; }
+
+.nav__admin {
+  border-bottom: none;
+  border-right: 1px solid black;
+  width: 150px;
+  height: 100vh;
+  vertical-align: top;
+  float: left; }
+  .nav__admin a {
+    display: inline-block;
+    vertical-align: top; }
+
+.admin__container {
+  display: inline-block;
+  width: 80%; }
